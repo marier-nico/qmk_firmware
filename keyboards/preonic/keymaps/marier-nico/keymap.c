@@ -16,6 +16,7 @@
 
 #include QMK_KEYBOARD_H
 #include "muse.h"
+#include "song_list.h"
 
 enum preonic_layers {
   _QWERTY,
@@ -35,6 +36,24 @@ enum preonic_keycodes {
   BACKLIT
 };
 
+enum custom_keycodes {
+  A_GRAVE = BACKLIT + 1, // Additional keys should follow the defaults.
+  E_GRAVE,
+  U_GRAVE,
+
+  A_CRCFLX, // Circumflex accents
+  E_CRCFLX,
+  I_CRCFLX,
+  O_CRCFLX,
+  U_CRCFLX,
+
+  C_CEDILLE,
+};
+
+enum songs {
+  USSR = C_CEDILLE + 1, // Even more additional keys should come after previous customs.
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
@@ -42,9 +61,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Del  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |Enter |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Shift |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Ctrl | GUI  | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
@@ -63,9 +82,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Tab  |   Q  |   W  |   F  |   P  |   G  |   J  |   L  |   U  |   Y  |   ;  | Del  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Esc  |   A  |   R  |   S  |   T  |   D  |   H  |   N  |   E  |   I  |   O  |  "   |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   K  |   M  |   ,  |   .  |   /  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
@@ -84,9 +103,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Tab  |   "  |   ,  |   .  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  | Del  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Esc  |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |  /   |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
@@ -102,44 +121,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
- * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Bksp |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Del  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   _  |   +  |   {  |   }  |  |   |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO ~ |ISO | |      |      |      |
+ * |      |      |      |      |      |      |      |      |      |   [  |   ]  |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |   ê  |      | PgUp | PgUp |   û  |   î  |   ô  |   ^  |   ¨  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |   â  |      |      |      | Home |  End |   _  |   +  |      |   `  |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      | PgDn | PgDn |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_preonic_grid(
-  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
-  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
-  KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE,
-  _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,S(KC_NUHS),S(KC_NUBS),KC_HOME, KC_END, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
+  _______, _______,  _______, _______,  _______, _______, _______, _______,  _______,  ALGR(KC_LBRACKET), ALGR(KC_RBRACKET), _______,
+  _______, _______,  _______, E_CRCFLX, _______, KC_PGUP, KC_PGUP, U_CRCFLX, I_CRCFLX, O_CRCFLX,          KC_LBRACKET,       LSFT(KC_RBRACKET),
+  _______, A_CRCFLX, _______, _______,  _______, KC_HOME, KC_END,  KC_UNDS,  KC_PLUS,  _______,           KC_QUOTE,          _______,
+  _______, _______,  _______, _______,  _______, KC_PGDN, KC_PGDN, _______,  _______,  _______,           _______,           _______,
+  _______, _______,  _______, _______,  _______, _______, _______, _______,  KC_MNXT,  KC_VOLD,           KC_VOLU,           KC_MPLY
 ),
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
+ * |   \  |      |   @  |   £  |   ¢  |      |      |      |      |   {  |   }  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   -  |   =  |   [  |   ]  |  \   |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO # |ISO / |      |      |      |
+ * |      |      |      |   è  |      | PgUp | PgUp |   ù  |   <  |   >  |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |   à  |      |      |      | Home |  End |   -  |   =  |      |   ~  |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |   ç  |      | PgDn | PgDn |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_preonic_grid(
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
-  KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
-  _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_NUHS, KC_NUBS, KC_PGUP, KC_PGDN, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
+  ALGR(KC_GRAVE), _______, ALGR(KC_2), ALGR(KC_3), ALGR(KC_4), _______, _______, _______, _______,   ALGR(KC_QUOTE),  ALGR(KC_BSLASH), _______,
+  _______,        _______, _______,    E_GRAVE,    _______,    KC_PGUP, KC_PGUP, U_GRAVE, KC_BSLASH, LSFT(KC_BSLASH), _______,         _______,
+  _______,        A_GRAVE, _______,    _______,    _______,    KC_HOME, KC_END,  KC_MINS, KC_EQL,    _______,         ALGR(KC_SCLN),   _______,
+  _______,        _______, _______,    C_CEDILLE,  _______,    KC_PGDN, KC_PGDN, _______, _______,   _______,         _______,         _______,
+  _______,        _______, _______,    _______,    _______,    _______, _______, _______, KC_MNXT,   KC_VOLD,         KC_VOLU,         KC_MPLY
 ),
 
 /* Adjust (Lower + Raise)
@@ -147,12 +166,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |Aud on|AudOff|AGnorm|AGswap|Qwerty|Colemk|Dvorak|      |      |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |Voice-|Voice+|Mus on|MusOff|MidiOn|MidOff|      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
+ * |      | USSR |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_preonic_grid(
@@ -160,11 +179,77 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, RESET,   DEBUG,   _______, _______, _______, _______, TERM_ON, TERM_OFF,_______, _______, KC_DEL,
   _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, DVORAK,  _______, _______,
   _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+  _______, USSR,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 )
 
 
 };
+
+// These macros allow the use of accents directly on a layer to avoid
+// making triple key combinations.
+bool french_accent_macros(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case A_GRAVE:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_QUOTE)"a");
+        return false;
+      }
+    case E_GRAVE:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_QUOTE)"e");
+        return false;
+      }
+    case U_GRAVE:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_QUOTE)"u");
+        return false;
+      }
+    case A_CRCFLX:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_LBRACKET)"a");
+        return false;
+      }
+    case E_CRCFLX:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_LBRACKET)"e");
+        return false;
+      }
+    case I_CRCFLX:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_LBRACKET)"i");
+        return false;
+      }
+    case O_CRCFLX:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_LBRACKET)"o");
+        return false;
+      }
+    case U_CRCFLX:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_LBRACKET)"u");
+        return false;
+      }
+    case C_CEDILLE:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_RBRACKET)"c");
+        return false;
+      }
+  }
+  return true;
+};
+
+float ussr[][2] = SONG(USSR_ANTHEM);
+
+bool play_song_macro (uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case USSR:
+      if (record->event.pressed) {
+        PLAY_SONG(ussr);
+        return false;
+      }
+  }
+  return true;
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -224,6 +309,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           return false;
           break;
       }
+
+    // Handle macros for French accents.
+    bool accent_result = french_accent_macros(keycode, record);
+    // Handle macros for song playing.
+    bool song_result = play_song_macro(keycode, record);
+
+    if (!accent_result || !song_result) {
+      return false;
+    }
+
     return true;
 };
 
