@@ -17,6 +17,7 @@
 #include QMK_KEYBOARD_H
 #include "muse.h"
 #include "song_list.h"
+#define MODS_SHIFT_MASK (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT))
 
 enum preonic_layers {
   _QWERTY,
@@ -231,7 +232,12 @@ bool french_accent_macros(uint16_t keycode, keyrecord_t *record) {
       }
     case C_CEDILLE:
       if (record->event.pressed) {
-        SEND_STRING(SS_TAP(X_RBRACKET)"c");
+        if (get_mods() & MODS_SHIFT_MASK) {
+          del_mods(MODS_SHIFT_MASK);
+          SEND_STRING(SS_TAP(X_RBRACKET)SS_LSFT("c"));
+        } else {
+          SEND_STRING(SS_TAP(X_RBRACKET)"c");
+        }
         return false;
       }
   }
