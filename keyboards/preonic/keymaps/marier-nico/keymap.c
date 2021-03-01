@@ -411,5 +411,5 @@ bool music_mask_user(uint16_t keycode) {
 }
 
 void keyboard_post_init_user(void) {
-  backlight_level_noeeprom(0);
+  rgblight_disable_noeeprom();
 }

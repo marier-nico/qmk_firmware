@@ -1,5 +1,15 @@
 # marier-nico's Preonic (rev3) layout
 
+## Notes
+
+Before starting, make sure that all submodules are _really_ up to date and all synced up with their
+upstreams, otherwise compiling will probably fail. Running `qmk setup` is not always enough to make
+sure everything is up to date and neither is `make git-submodule`.
+
+```
+$ git submodule update --recursive --remote
+```
+
 ## Features
 
 ### Familiar layout
