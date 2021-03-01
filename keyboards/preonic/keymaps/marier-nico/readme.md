@@ -1,4 +1,4 @@
-# marier-nico's Preonic layout
+# marier-nico's Preonic (rev3) layout
 
 ## Features
 
