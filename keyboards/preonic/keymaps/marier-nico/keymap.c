@@ -51,10 +51,12 @@ enum custom_keycodes {
   U_CRCFLX,
 
   C_CEDILLE,
+
+  TERMINAL
 };
 
 enum songs {
-  USSR = C_CEDILLE + 1, // Even more additional keys should come after previous customs.
+  USSR = TERMINAL + 1 // Even more additional keys should come after previous customs.
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -77,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
   KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-  KC_LCTRL, KC_LGUI, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  KC_LCTRL, TERMINAL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* Colemak
@@ -279,6 +281,17 @@ bool play_song_macro (uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
+bool misc_macros (uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case TERMINAL:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LGUI(SS_TAP(X_ENT)));
+        return false;
+      }
+  }
+  return true;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
         case QWERTY:
@@ -348,8 +361,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     bool accent_result = french_accent_macros(keycode, record);
     // Handle macros for song playing.
     bool song_result = play_song_macro(keycode, record);
+    // Handle other misc macros.
+    bool misc_result = misc_macros(keycode, record);
 
-    if (!accent_result || !song_result) {
+    if (!accent_result || !song_result || !misc_result) {
       return false;
     }
 
