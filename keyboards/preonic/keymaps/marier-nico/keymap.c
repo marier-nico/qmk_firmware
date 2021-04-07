@@ -15,8 +15,6 @@
  */
 
 #include QMK_KEYBOARD_H
-#include "muse.h"
-#include "song_list.h"
 #define MODS_SHIFT_MASK (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT))
 
 enum preonic_layers {
@@ -31,11 +29,11 @@ enum preonic_keycodes {
   QWERTY = SAFE_RANGE,
   COLEMAKDH,
   LOWER,
-  RAISE,
+  RAISE
 };
 
 enum custom_keycodes {
-  A_GRAVE = SAFE_RANGE,
+  A_GRAVE = RAISE + 1,  // Cannot be SAFE_RANGE
   E_GRAVE,
   U_GRAVE,
 
